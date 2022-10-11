@@ -46,10 +46,12 @@ def calculate_even_week():
         even_week = False
 
 
+# calculate every monday at 00:00
+schedule.every().monday.at("00:00").do(calculate_even_week)
+
+
 # calculate after reboot
 calculate_even_week()
-# calculate every monday at 00:00
-schedule.every().monday.at("20:51").do(calculate_even_week)
 
 
 # handler - listening to user commands
@@ -64,6 +66,9 @@ def start(message):
 
     bot.send_message(message.chat.id, content, parse_mode='html', reply_markup=out_markup)
     bot.delete_message(message.chat.id, message.message_id)
+    # inject schedule cycle into bot.infinity_polling() (Prevents conflict)
+    while True:
+        schedule.run_pending()
 
 
 @bot.message_handler(commands=['website'])
@@ -117,7 +122,7 @@ def get_commands(message):
         bot.delete_message(message.chat.id, message.message_id)
 
     if message.text == "КНС-11/2":
-        calculate_even_week()
+        # calculate_even_week() - we don't need this anymore
         group = "Group: " + message.text
         out_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         menu_button = types.KeyboardButton('/menu')
