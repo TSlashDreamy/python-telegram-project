@@ -1,5 +1,6 @@
 import telebot
 import os
+import math
 import schedule
 from datetime import date
 from telebot import types
@@ -30,7 +31,7 @@ def calculate_even_week():
     start_year = date(date.today().year, 1, 1)
     days = today - start_year
     weeks = days.days / days_a_week
-    weeks = round(weeks)
+    weeks = math.floor(weeks)
 
     print("\n========================")
     print("🧮 Date calculating: ")
