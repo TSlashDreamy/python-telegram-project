@@ -1,16 +1,16 @@
 def switch_day(inner):
     match inner:
         case 0:
-            return "\nMonday\n================================="
+            return "Понеділок"
 
         case 1:
-            return "\nTuesday\n================================="
+            return "Вівторок"
 
         case 2:
-            return "\nWednesday\n================================="
+            return "Середа"
 
         case 3:
-            return "\nThursday\n================================="
+            return "Четверг"
 
         case 4:
-            return "\nFriday\n================================="
+            return "П'ятниця"
