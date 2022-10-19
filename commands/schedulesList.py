@@ -13,6 +13,6 @@ def get_available_schedules(message):
     fourth_button = types.KeyboardButton('КНС-21/1')
     fiveth_button = types.KeyboardButton('КНС-21/2')
     out_markup.add(first_button, second_button, third_button, fourth_button, fiveth_button)
-    bot.send_message(message.chat.id, "Choose your group",
+    bot.send_message(message.chat.id, "Оберіть свою групу",
                      parse_mode='html', reply_markup=out_markup)
     bot.delete_message(message.chat.id, message.message_id)

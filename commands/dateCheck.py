@@ -1,23 +1,25 @@
-from core import botCore
-from datetime import date
-
+from core import botCore, dateCalculation, daySwitcher
 
 bot = botCore.bot
 me = botCore.me
 types = botCore.types
 
 
-def date_check(message, even_week):
-    days_a_week = 7
-    today = date.today()
-    start_year = date(date.today().year, 1, 1)
-    days = today - start_year
-    weeks = days.days / days_a_week
-    weeks = round(weeks)
-    message_list = ["Today: " + str(today.strftime("%d/%m/%Y")),
-                    "Total days: " + str(days.days),
-                    "Total weeks: " + str(weeks),
-                    "Even week: " + str(even_week)]
+def represent_bool_variable(inner):
+    if not inner:
+        return "не парний "
+    elif inner:
+        return "парний"
 
-    bot.send_message(message.chat.id, f"📅 Info about date: \n" + "\n".join(message_list))
+
+def date_check(message):
+    message_list = [f'\nЧас: {str(dateCalculation.time)}',
+                    f'День тижня: {str(daySwitcher.switch_day(dateCalculation.day))}',
+                    f'Сьогоднішня дата: {str(dateCalculation.today.strftime("%d/%m/%Y"))}',
+                    f'Всього днів пройшло: {str(dateCalculation.days.days)}',
+                    f'Всього тижнів пройшло: {str(dateCalculation.weeks)}',
+                    f'Тиждень: <u>{str(represent_bool_variable(dateCalculation.even_week))}</u>'
+                    ]
+
+    bot.send_message(message.chat.id, f"🗓️ Сьогодні: \n" + "\n".join(message_list), parse_mode='html')
     bot.delete_message(message.chat.id, message.message_id)
