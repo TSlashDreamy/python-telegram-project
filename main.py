@@ -1,10 +1,10 @@
 import schedule
 from core import botCore
 from core import dateCalculation
-from commands import start as bot_start
+from commands import start as bot_start, diaryCheck
 from commands import website as bot_website
 from commands import showSchedule as bot_showSchedule
-from commands import commandsList, back, dateCheck, schedulesList, menu
+from commands import commandsList, back, dateCheck, schedulesList, menu, diaryTrigger, diaryRemember, diaryList, diaryDelete
 
 bot = botCore.bot
 
@@ -25,6 +25,11 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_commands(message):
+    if diaryTrigger.inputting_note:
+        diaryRemember.remember_data(message)
+
+    if diaryDelete.deleting_note:
+        diaryDelete.delete_note(message)
 
     if message.text == "📚 Команди":
         commandsList.show_commands(message)
@@ -40,6 +45,18 @@ def get_commands(message):
 
     if message.text == "📅 Точна дата":
         dateCheck.date_check(message)
+
+    if message.text == "📒 Записник":
+        diaryList.show_commands(message)
+
+    if message.text == "📒 Внести запис":
+        diaryTrigger.trigger_event(message)
+
+    if message.text == "📒 Переглянути записи":
+        diaryCheck.show_notes(message)
+
+    if message.text == "📒 Видалити запис":
+        diaryDelete.delete_note(message)
 
     if message.text == "📃 Розклад":
         schedulesList.get_available_schedules(message)
