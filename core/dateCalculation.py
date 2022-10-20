@@ -2,11 +2,12 @@ import math
 from datetime import date, datetime
 from core import daySwitcher
 
-global even_week, today, days, weeks, time, day
+global even_week, today, days, weeks, time, day, calc_amount
+calc_amount = 1
 
 
 def calculate_even_week():
-    global even_week, today, days, weeks, time, day
+    global even_week, today, days, weeks, time, day, calc_amount
 
     days_a_week = 7
     day = datetime.today().weekday()
@@ -18,8 +19,9 @@ def calculate_even_week():
     time = datetime.now()
     time = time.strftime("%H:%M:%S")
 
-    print("\n========================")
-    print("🧮 Обрахування дати: ")
+    print("\n========================\n")
+    print("ℹ Відбулось обрахування дати")
+    print("🔢 Кількість обрахувань з моменту запуску:", calc_amount)
     print("🕑 Час:", time)
     print("📆 День тижня:", daySwitcher.switch_day(day))
     print("🗓️ Сьогоднішня дата:", today.strftime("%d/%m/%Y"))
@@ -32,3 +34,5 @@ def calculate_even_week():
     else:
         print("➖ Не парний тиждень")
         even_week = False
+    calc_amount += 1
+    print("\n========================")
