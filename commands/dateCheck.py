@@ -13,6 +13,7 @@ def represent_bool_variable(inner):
 
 
 def date_check(message):
+    dateCalculation.calculate_even_week()
     message_list = [f'\nЧас: {str(dateCalculation.time)}',
                     f'День тижня: {str(daySwitcher.switch_day(dateCalculation.day))}',
                     f'Сьогоднішня дата: {str(dateCalculation.today.strftime("%d/%m/%Y"))}',
