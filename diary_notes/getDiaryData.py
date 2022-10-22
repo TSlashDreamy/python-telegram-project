@@ -18,13 +18,10 @@ def get_data():
         cur.execute('select * From DZ')
         data = cur.fetchall()
         con.close()
-        print(data)
         if not data:
-            print("No data")
             return 0
         return data
     except:
-        print("No data")
         return 0
 
 
