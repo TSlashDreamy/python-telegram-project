@@ -47,8 +47,9 @@ def show_shedule(message, even_week):
                 schedule_list.append(content)
 
         # sending message to user
-        bot.send_message(message.chat.id, "\n".join(schedule_list),
+        bot_message = bot.send_message(message.chat.id, "\n".join(schedule_list),
                          parse_mode='html', reply_markup=out_markup)
+        bot.delete_message(message.chat.id, bot_message.id - 2)
         if even_week:
             bot.send_message(message.chat.id, "Тиждень <u>парний</u>", parse_mode='html')
         else:

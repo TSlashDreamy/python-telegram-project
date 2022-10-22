@@ -33,12 +33,13 @@ def check_database(message):
             if not validity:
                 bot.send_message(message.chat.id, "❌ У Вас немає такого запису",
                                  parse_mode='html')
-                bot.delete_message(message.chat.id, message.message_id)
+                bot.delete_message(message.chat.id, message.id)
                 return
         except Exception:
             bot.send_message(message.chat.id, "❌ У Вас немає такого запису",
                              parse_mode='html')
-            bot.delete_message(message.chat.id, message.message_id)
+            bot.delete_message(message.chat.id, message.id)
+
 
 
 def delete_note(message):
@@ -58,9 +59,11 @@ def delete_note(message):
         con.close()
         deleting_note = False
         request_from_user = 0
-        bot.send_message(message.chat.id, f"✅ Запис №{number} видалено!",
+        bot_message = bot.send_message(message.chat.id, f"✅ Запис №{number} видалено!",
                          parse_mode='html')
-        diaryList.show_commands(message)
+        bot.delete_message(message.chat.id, bot_message.id - 2)
+        bot.delete_message(message.chat.id, message.id)
+        diaryList.show_commands(message, "call")
     elif not deleting_note and request_from_user == 0:
         out_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         data = getDiaryData.get_data()
@@ -70,9 +73,10 @@ def delete_note(message):
             for i in range(len(data)):
                 if data[i][1] == message.from_user.id:
                     out_markup.add(types.KeyboardButton(f'{data[i][0]}.{data[i][2]}'))
-            bot.send_message(message.chat.id, "Оберіть запис, який бажаєте видалити за допомогою кнопки",
+            bot_message = bot.send_message(message.chat.id, "Оберіть запис, який бажаєте видалити за допомогою кнопки",
                              parse_mode='html', reply_markup=out_markup)
-            bot.delete_message(message.chat.id, message.message_id)
+            bot.delete_message(message.chat.id, message.id)
+            bot.delete_message(message.chat.id, bot_message.id - 2)
         else:
             bot.send_message(message.chat.id, "📂 У Вас немає записів для видалення",
                              parse_mode='html')
@@ -84,4 +88,4 @@ def delete_note(message):
         bot.send_message(message.chat.id, "⚠️О ні!\nНа даний момент це не доступно :с\nПовторіть спробу через декілька "
                                           "секунд ",
                          parse_mode='html')
-        bot.delete_message(message.chat.id, message.message_id)
+        bot.delete_message(message.chat.id, message.id)

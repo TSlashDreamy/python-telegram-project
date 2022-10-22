@@ -14,6 +14,7 @@ try:
     bot = telebot.TeleBot(API_TOKEN)
     me = bot.get_me()
     types = types
+    owner_id = int(os.getenv("OWNER_ID"))
     print("\n========================\n")
     print(f'📃 Telegram Log: '
           f'\n{status}'

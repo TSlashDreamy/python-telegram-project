@@ -12,12 +12,13 @@ def start(message, action):
                   f'ІДКТД"</u>\n\nОберіть знизу кнопку <u>📚 Команди</u>, щоб дізнатись можливості бота.\nБажаємо ' \
                   f'гарного дня ✨ '
     elif action == "menu":
-        content = f'📱 Головне меню\n\nОберіть одну з кнопок, щоб продовжити'
+        content = f'📱 Головне меню'
 
     out_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     commands = types.KeyboardButton('📚 Команди')
     website_button = types.KeyboardButton('📄 Сайт Інституту')
     out_markup.add(commands, website_button)
 
-    bot.send_message(message.chat.id, content, parse_mode='html', reply_markup=out_markup)
+    bot_message = bot.send_message(message.chat.id, content, parse_mode='html', reply_markup=out_markup)
     bot.delete_message(message.chat.id, message.message_id)
+    bot.delete_message(message.chat.id, bot_message.id - 2)

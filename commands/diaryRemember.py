@@ -29,8 +29,10 @@ def remember_data(message):
     else:
         return
     setDiaryData.database_input(count + 1, message.text, current_date, message.from_user.id)
-    bot.send_message(message.chat.id, "✅ Запис внесено",
+    bot_message = bot.send_message(message.chat.id, "✅ Запис внесено",
                      parse_mode='html')
+    bot.delete_message(message.chat.id, message.id)
+    bot.delete_message(message.chat.id, bot_message.id - 2)
     diaryTrigger.input_for_user = 0
     diaryTrigger.inputting_note = False
-    diaryList.show_commands(message)
+    diaryList.show_commands(message, "call")

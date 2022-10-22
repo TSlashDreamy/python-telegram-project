@@ -1,4 +1,6 @@
 import schedule
+
+from admin import dynamicUpdate
 from core import botCore
 from core import dateCalculation
 from commands import start as bot_start, diaryCheck
@@ -18,9 +20,6 @@ schedule.every().monday.at("00:00").do(dateCalculation.calculate_even_week)
 @bot.message_handler(commands=['start'])
 def start(message):
     bot_start.start(message, "start")
-    # inject schedule cycle into bot.infinity_polling() (Prevents conflict)
-    while True:
-        schedule.run_pending()
 
 
 @bot.message_handler(content_types=['text'])
@@ -67,6 +66,14 @@ def get_commands(message):
             or message.text == "КНС-21/1" \
             or message.text == "КНС-21/2":
         bot_showSchedule.show_shedule(message, dateCalculation.even_week)
+
+    if message.text == "❌ Динамічне оновлення не запущено" \
+            or message.text == "✅ Динамічне оновлення працює":
+        dynamicUpdate.switch_updating(message)
+        # inject schedule cycle into bot.infinity_polling() (Prevents conflict)
+        if dynamicUpdate.activated:
+            while True:
+                schedule.run_pending()
 
 
 bot.infinity_polling()

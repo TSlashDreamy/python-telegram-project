@@ -15,10 +15,14 @@ def show_notes(message):
             if diary_data[i][1] == message.from_user.id:
                 content = f'{diary_data[i][0]}. <b>{diary_data[i][2]}</b>   📆{diary_data[i][3]}'
                 diary_list.append(content)
-        bot.send_message(message.chat.id, "\n".join(diary_list),
+        bot_message = bot.send_message(message.chat.id, "\n".join(diary_list),
                          parse_mode='html')
-        bot.delete_message(message.chat.id, message.message_id)
+        bot.delete_message(message.chat.id, message.id)
+        bot.delete_message(message.chat.id, bot_message.id - 2)
+        diaryList.show_commands(message, "call")
     except Exception:
-        bot.send_message(message.chat.id, "📂 У Вас немає записів",
+        bot_message = bot.send_message(message.chat.id, "📂 У Вас немає записів",
                          parse_mode='html')
-        bot.delete_message(message.chat.id, message.message_id)
+        bot.delete_message(message.chat.id, message.id)
+        bot.delete_message(message.chat.id, bot_message.id - 2)
+        diaryList.show_commands(message, "call")
