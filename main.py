@@ -28,7 +28,7 @@ def get_commands(message):
     if diaryTrigger.inputting_note:
         diaryRemember.remember_data(message)
 
-    if diaryDelete.deleting_note:
+    if diaryDelete.deleting_note and message.from_user.id == diaryDelete.request_from_user:
         diaryDelete.delete_note(message)
 
     if message.text == "📚 Команди":
