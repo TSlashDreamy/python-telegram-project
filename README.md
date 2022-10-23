@@ -3,6 +3,6 @@
 ---
 Taras Chaika | branch `shell`
 
-Shtokalo Maksym | branch `Databse`
+Maksym Shtokalo  | branch `Databse`
 
 Name SecondName | branch ``
