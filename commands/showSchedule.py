@@ -1,3 +1,5 @@
+import logging
+
 from core import botCore, scheduleSwitcher, daySwitcher, dateCalculation, lessonSwitcher
 from databases.databaseManagment import get_all_schedule
 
@@ -6,7 +8,7 @@ me = botCore.me
 types = botCore.types
 
 
-def show_shedule(message, even_week):
+def show_schedule(message, even_week):
     # recalculating all variables
     dateCalculation.calculate_even_week()
     try:
@@ -42,7 +44,7 @@ def show_shedule(message, even_week):
                 # checking current lesson and highlighting it
                 if lessonSwitcher.select_current(number - 1) and dateCalculation.day == i:
                     content = f'▶️ <b><u>{str(number)}. {name} {str(time)}</u></b>'
-                elif not lessonSwitcher.select_current(number - 1):
+                elif not lessonSwitcher.select_current(number - 1) or not dateCalculation.day == i:
                     content = f'{str(number)}. {name} {str(time)}'
                 schedule_list.append(content)
 
@@ -59,6 +61,7 @@ def show_shedule(message, even_week):
     # catching errors
     except Exception as e:
         print(f"⚠️Oh noes, we got an error while trying to show schedule: {repr(e)}")
+        logging.error(e)
         bot.send_message(message.chat.id, "На жаль розкладу для вашої групи поки-що немає :с",
                          parse_mode='html')
         bot.delete_message(message.chat.id, message.message_id)

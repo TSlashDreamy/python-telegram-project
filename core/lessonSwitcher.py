@@ -15,4 +15,3 @@ def select_current(lesson_number, check_time=None):
     begin_time = lessons_time[lesson_number][0]
     end_time = lessons_time[lesson_number][1]
     return check_time >= begin_time and check_time <= end_time
-

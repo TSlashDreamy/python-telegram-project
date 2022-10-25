@@ -65,7 +65,7 @@ def get_commands(message):
             or message.text == "КНС-12" \
             or message.text == "КНС-21/1" \
             or message.text == "КНС-21/2":
-        bot_showSchedule.show_shedule(message, dateCalculation.even_week)
+        bot_showSchedule.show_schedule(message, dateCalculation.even_week)
 
     if message.text == "❌ Динамічне оновлення не запущено" \
             or message.text == "✅ Динамічне оновлення працює":
